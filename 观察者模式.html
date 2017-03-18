@@ -10,30 +10,37 @@
 <script>
         var event = {
             _listener:{},
+            //添加事件函数
             addEve:function(type,fn){
                 if(typeof type =="string" && typeof fn =="function"){
+                    //如果没有此事件就添加一个事件数组
                     if(typeof this._listener[type] === "undefined"){
                         this._listener[type]=[];
                     }
+                    //判断fn是否为函数，是的话就将其压入type事件数组中
                     if(typeof fn == "function"){
                         this._listener[type].push(fn);
                     }
                 }
                 return this;
             },
+            //触发事件函数
             fireEve:function(type){
                 var arrEve = this._listener[type];
                 if(arrEve instanceof Array){
+                    //判断存在事件数组，并依次执行
                     for(var i=0;i<arrEve.length;i++){
                         arrEve[i]();
                     }
                 }
                 return this;
             },
+            //移除事件函数
             removeEve:function(type,fn){
                 var arrEve = this._listener[type];
                 if(typeof type =="string" && arrEve instanceof Array){
                     if(typeof fn == "function"){
+                        //判断fn是否是函数，是就遍历事件数组，匹配到相同的移除匹配的fn
                         for(var i=0;i<arrEve.length;i++){
                             if(arrEve[i] == fn){
                                 arrEve.splice(i,1);
@@ -41,6 +48,7 @@
                             }
                         }
                     }else{
+                        //如果fn不是函数，那么就直接移除对应type的事件数组属性
                         delete arrEve;
                     }
                 }
