@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+        var event = {
+            _listener:{},
+            addEve:function(type,fn){
+                if(typeof type =="string" && typeof fn =="function"){
+                    if(typeof this._listener[type] === "undefined"){
+                        this._listener[type]=[];
+                    }
+                    if(typeof fn == "function"){
+                        this._listener[type].push(fn);
+                    }
+                }
+                return this;
+            },
+            fireEve:function(type){
+                var arrEve = this._listener[type];
+                if(arrEve instanceof Array){
+                    for(var i=0;i<arrEve.length;i++){
+                        arrEve[i]();
+                    }
+                }
+                return this;
+            },
+            removeEve:function(type,fn){
+                var arrEve = this._listener[type];
+                if(typeof type =="string" && arrEve instanceof Array){
+                    if(typeof fn == "function"){
+                        for(var i=0;i<arrEve.length;i++){
+                            if(arrEve[i] == fn){
+                                arrEve.splice(i,1);
+                                break;
+                            }
+                        }
+                    }else{
+                        delete arrEve;
+                    }
+                }
+                return this;
+            }
+        }
+        //定义的函数
+        function a(){
+            alert(1);
+        }
+        event.addEve("alert",a);
+        event.fireEve("alert");
+        event.removeEve("alert",a);
+        event.fireEve("alert");
+</script>
+</body>
+</html>
