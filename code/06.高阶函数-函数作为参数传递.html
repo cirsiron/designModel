@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>高阶函数1</title>
+</head>
+<body>
+	<script>
+	var getUserInfo = function(url,id, data,fn) {
+		$.ajax({
+			url:url+id,
+			data:data,
+			success:function(res) {
+				typeof fn === 'function' && fn(res);
+			}
+		});
+	}
+
+
+	var appendDiv = function(fn) {
+		for(var i = 0; i < 100; i++){
+			var div = docuemnt.createElement('div');
+			div.innerHTML = i;
+			document.body.appendChild(div);
+			fn && fn(div);
+		}
+	}
+	appendDiv(function(node){
+		node.style.display = 'none';
+	});
+	</script>
+</body>
+</html>

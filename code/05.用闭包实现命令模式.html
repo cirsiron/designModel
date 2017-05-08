@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>命令模式</title>
+</head>
+<body>
+	<button id="execute">open</button>
+	<button id="undo">close</button>
+</body>
+
+<script>
+//命令模式把请求封装为对象，
+//1. 面向对象版本
+// var Tv = {
+// 	open:function() {
+// 		console.log('open');
+// 	},
+// 	close:function() {
+// 		console.log('close')
+// 	}
+// }
+// var OpenTvCommend = function(receiver) {
+// 	this.receiver = receiver;
+// }
+// OpenTvCommend.prototype.open = function() {
+// 	this.receiver.open();
+// }
+// OpenTvCommend.prototype.close = function() {
+// 	this.receiver.close();
+// }
+
+// var setCommend = function(commend) {
+// 	document.getElementById('execute').onclick = function() {
+// 		commend.open();
+// 	};
+// 	document.getElementById('undo').onclick = function() {
+// 		commend.close();
+// 	} 
+// }
+// setCommend(new OpenTvCommend(Tv));
+
+// 2.闭包版本
+var Tv = {
+	open:function(){
+		console.log('open');
+	},
+	close:function() {
+		console.log('close');
+	}
+}
+
+var createCommend = function(receiver){
+	function open() {
+		receiver.open();
+	};
+	function close() {
+		receiver.close();
+	};
+	return {
+		open:open,
+		close:close
+	}
+}
+
+var setCommend = function(commend) {
+	document.getElementById('execute').onclick = function() {
+		commend.open();
+	};
+	document.getElementById('undo').onclick = function() {
+		commend.close();
+	};
+}
+setCommend(createCommend(Tv));
+</script>
+</html>

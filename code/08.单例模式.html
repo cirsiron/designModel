@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>单例模式</title>
+</head>
+<body>
+	<script>
+	var getSingle = function(fn){
+		var _ret;
+		return function(){
+			//如果生成过，就不再生成。直接返回上一次生成的
+			return _ret || (_ret = fn.apply(null,arguments));//传入的匿名函数直接执行，如下面的代码。返回一个对象{name:name},这里的arguments指的就是传入的参数name
+		}
+	};
+	//
+	var getScript = getSingle(function(name){
+		return {name:name}
+	});
+	var s1 = getScript(1);//只会生成这一次的
+	var s2 = getScript(2);
+	console.log(s1 == s2);//true
+	</script>
+</body>
+</html>

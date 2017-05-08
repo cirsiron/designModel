@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+	//比如有时候用到img
+	var report = function(src) {
+		var img = new Image();
+		img.src = src;
+	}
+	report('http://xxxsrc.png');
+	//上面的代码，由于src会发送起http请求，但是img在report函数结束后就被销毁，而http可能还没有发起http请求，所以就可能产生一些bug；
+	//解决
+	var report = (function() {
+		var imgs = [];
+		return function(src) {
+			var img = new Image();
+			imgs.push(img);
+			img.src = src;
+		}
+	})();
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>面向切面</title>
+</head>
+<body>
+	<script>
+	//作用就是把一些和核心业务无关的逻辑抽离出来，例如日志，异常处理等
+
+	// Function.prototype.before = function(beforeFn) {
+	// 	var _this = this;
+	// 	return function() {
+	// 		beforeFn.apply(this, arguments);
+	// 		return _this.apply(this, arguments);
+	// 	}
+	// }
+	// Function.prototype.after = function(afterFn) {
+	// 	var _this = this;
+	// 	return function() {
+	// 		var ret = _this.apply(this, arguments);
+	// 		afterFn.apply(this, arguments);
+	// 		return ret;
+	// 	}
+	// }
+	// var fn = function() {
+	// 	console.log('2');
+	// }
+	// var func = fn.before(function(){
+	// 	console.log('1');
+	// }).after(function(){
+	// 	console.log('3');
+	// });
+
+	// func();
+	// 
+	var advice = function(originalFunc){
+	 return function() {
+	  console.log("before function");
+	  originalFunc();
+	  console.log("after function");
+	 }
+	}
+	var obj = {
+		 foo: function(){
+		  console.log(this.name);
+		 },
+		 name: "obj1"
+	}
+	obj.foo = advice(obj.foo.bind(obj))
+	obj.foo();
+	</script>
+</body>
+</html>

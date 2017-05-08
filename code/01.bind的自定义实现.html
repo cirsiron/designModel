@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>this的应用--01.bind的自定义实现</title>
+</head>
+<body>
+	<script>
+	// 模拟函数的bind--简介版
+	// Function.prototype.bind = function(context) {
+	// 	//context就是需要绑定的上下文
+	// 	var _this = this;//缓存this，
+	// 	return function() {
+	// 		//此处的this不是实例化的函数，所以需要_this；
+	// 		return _this.apply(context, arguments);
+	// 	}
+	// }
+	// 
+	//模拟函数的bind--增强版
+	Function.prototype.bind = function() {
+		var _this = this;//保存原函数
+		var context = [].shift.call(arguments);//需要绑定的this上下文
+		var args = [].slice.apply(arguments);
+		return function() {
+			return _this.apply(context, [].concat.apply(args,[].slice.apply(arguments)));
+		}
+	}
+
+
+	var obj1 = {
+		say:function() {
+			console.log('obj1');
+		}
+	}
+	var obj2 = {
+		say:function() {
+			console.log('obj2');
+		}
+	}
+	//使用
+	var fn = function() {
+		if(typeof this.say === 'function'){
+			//此处的this就是bind绑定的对象
+			this.say();
+		}
+	}.bind(obj1);
+	fn(12,2);
+
+
+
+	</script>
+</body>
+</html>

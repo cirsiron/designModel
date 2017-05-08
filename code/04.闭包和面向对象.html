@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+	var extent = function() {
+		var val = 0;
+		return {
+			call:function() {
+				val++;
+				console.log(val);
+			}
+		}
+	}
+	var extent = extent();
+	extent.call();
+	extent.call();
+
+	//
+	var extent = function() {
+		this.val = 1;
+	}
+	extent.prototype.call = function() {
+		this.val++;
+		console.log(this.val);
+	}
+	var ex = new extent();
+	ex.call();
+
+
+	//用闭包实现命令模式
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>this与apply在继承方面的使用</title>
+</head>
+<body>
+	<script>
+	var Fn1 = function(name) {
+		this.name = name;
+	}
+	var Fn2 = function() {
+		Fn1.apply(this, arguments);
+	}
+	Fn2.prototype.say = function() {
+		console.log(this.name);
+	}
+	var fn2 = new Fn2('jack');
+	fn2.say();
+	</script>
+</body>
+</html>
