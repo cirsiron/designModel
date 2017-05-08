@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //多态是将做什么和谁去做以及如何去做区分开来，也就是将不变的事物和可能会改变的事物分离开来
+        //此例中动物会叫是不变的，但是具体动物的叫声确实可变的
+        //主人想发出一个命令就会让鸭子和鸡发出叫声
+        var makeSound = function(animal){
+            animal.say();
+        }
+        //鸭子类
+        var Duck = function(){
+            this.name = 'duck';
+        }
+        Duck.prototype.say = function(){
+            console.log(this.name + '叫声是：嘎嘎嘎');
+        }
+        //鸡类
+        var Chicken = function(){
+            this.name = 'chicken';
+        }
+        Chicken.prototype.say = function(){
+            console.log(this.name + '叫声是：咕咕咕');
+        }
+
+        makeSound(new Duck());
+        makeSound(new Chicken());
+        //有一天我们要添加一个dog叫声
+        //只需要添加一些代码就行，而不用去修改原来的代码
+        var Dog = function(){
+            this.name = 'dog'
+        }
+        Dog.prototype.say=function(){
+            console.log(this.name + "汪汪汪");
+        }
+        makeSound(new Dog());
+        //一个现实中的例子
+        //假设我们要编写一个地图应用，现在有两家可选的地图 API 提供商供我们接入自己的应用。
+// 目前我们选择的是谷歌地图，谷歌地图的 API 中提供了 show 方法，负责在页面上展示整个地图
+
+        var googleMap = {
+            show:function(){
+                console.log("google map");
+            }
+        } 
+        var BaiduMap = {
+            show:function(){
+                console.log("baidu map");
+            }
+        } 
+        //这块代码只负责渲染地图，具体如何渲染就交给了各自地图方法show
+        var mapRender = function(map){
+            if(map &&typeof map.show === 'function'){
+                map.show();
+            }
+        }
+        mapRender(googleMap);
+        mapRender(BaiduMap);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p id="id">11</p>
+    <script>
+        //封装狭义的指的是‘封装数据’，封装的目的是将信息进行隐藏，不仅包括数据还有隐藏实现的细节，设计细节和隐藏对象的类型
+
+        //此处利用了闭包和函数作用域模拟了private和public两种封装属性
+        var obj = (function(){
+            var _private = 'sev';
+            return {
+                say(){
+                    console.log('我是say方法',_private);
+                }
+            }
+        })();
+        obj.say();
+
+        for(var i = 0; i < 5; i++ ){
+            var p = document.getElementById("id");
+            p.onclick=function(){
+                console.log(this);
+            }
+        }
+    </script>
+</body>
+</html>
