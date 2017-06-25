@@ -54,6 +54,26 @@
 		submitBtn.onclick = function(){
 			formSubmit();
 		}
+		
+		
+		 Function.prototype.after = function(fn) {
+		var self = this;
+		// fn();
+		return function() {
+		    var ret = self.apply(this, arguments);
+		    if (ret === "next") {
+			return fn.apply(this, arguments);
+		    }
+		    return ret;
+		}
+	    }
+	    var a = function() {
+		return "next";
+	    }
+	    var aa = a.after(function(name) {
+		console.log(name);
+	    });
+	    aa(1);
 	</script>
 </body>
 </html>
