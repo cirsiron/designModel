@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>装饰者模式</title>
+</head>
+<body>
+	<script>
+		// 分离校验输入和提交 ajax 请求
+		var validata = function() {
+			if(username.value === "") {
+				return false;
+			}
+			if(password === "") {
+				return false;
+			}
+		}
+		var submit = function() {
+			if(validata() === false) {
+				return false;
+			}
+			var param = {
+
+			}
+			ajax("http:xxx.com", param);
+		}
+
+		submitBtn.onclick = function() {
+			submit();
+		}
+
+
+
+		//////////////////
+		// 分离校验输入和提交 ajax 请求
+		Function.prototype.before = function(fn) {
+			var _t = this;
+			return function() {
+				if(fn.apply(this, arguments) === false) {
+					return false;
+				}
+				return _t.apply(this, arguments)
+			}
+		}
+		var validata = function() {
+			if(username.value === "") {
+				return false;
+			}
+			if(password === "") {
+				return false;
+			}
+		}
+		formSubmit = formSubmit.before( validata );
+		submitBtn.onclick = function(){
+			formSubmit();
+		}
+	</script>
+</body>
+</html>
